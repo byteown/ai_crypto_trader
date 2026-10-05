@@ -6,7 +6,7 @@
 После каждой фазы проект **рабочий** и его можно показать.
 
 ## Фаза 0. Фундамент
-- [ ] 0.1 git, uv, скелет FastAPI, `/health`, config через pydantic-settings, первый тест, ruff
+- [x] 0.1 git, uv, скелет FastAPI, `/health`, config через pydantic-settings, первый тест, ruff
 - [ ] 0.2 Docker: Dockerfile для backend, docker-compose (api + postgres + redis)
 - [ ] 0.3 GitHub-репозиторий + GitHub Actions CI (ruff + pytest)
 

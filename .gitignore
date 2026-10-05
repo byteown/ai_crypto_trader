@@ -4,3 +4,6 @@ __pycache__/
 .ruff_cache/
 .venv/
 .pytest_cache
+db_data/
+redis_data/
+.env
