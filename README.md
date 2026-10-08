@@ -1,4 +1,4 @@
-# AI Trade Agent ![workflow](https://github.com/byteown/ai_crypto_trader/actions/workflows/CI/CD/badge.svg)
+# AI Trade Agent [![CI/CD](https://github.com/byteown/ai_crypto_trader/actions/workflows/ci.yml/badge.svg)](https://github.com/byteown/ai_crypto_trader/actions/workflows/ci.yml)
 
 ИИ-трейдер который подсказывает дальнейшие шаги, риски и стратегии в крипто-трейдинге
 
