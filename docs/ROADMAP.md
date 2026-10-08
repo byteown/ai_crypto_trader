@@ -7,7 +7,7 @@
 
 ## Фаза 0. Фундамент
 - [x] 0.1 git, uv, скелет FastAPI, `/health`, config через pydantic-settings, первый тест, ruff
-- [ ] 0.2 Docker: Dockerfile для backend, docker-compose (api + postgres + redis)
+- [x] 0.2 Docker: Dockerfile для backend, docker-compose (api + postgres + redis)
 - [ ] 0.3 GitHub-репозиторий + GitHub Actions CI (ruff + pytest)
 
 ## Фаза 1. База данных
