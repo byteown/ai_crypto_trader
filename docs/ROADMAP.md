@@ -11,7 +11,7 @@
 - [x] 0.3 GitHub-репозиторий + GitHub Actions CI (ruff + pytest)
 
 ## Фаза 1. База данных
-- [ ] 1.1 SQLAlchemy 2.0 (async) + сессия как FastAPI-зависимость
+- [x] 1.1 SQLAlchemy 2.0 (async) + сессия как FastAPI-зависимость
 - [ ] 1.2 Alembic, первая миграция: модель `bots`
 - [ ] 1.3 CRUD API для ботов (schemas → repository → router)
 - [ ] 1.4 Интеграционные тесты с отдельной тестовой БД (фикстуры pytest)
