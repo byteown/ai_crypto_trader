@@ -8,7 +8,7 @@
 ## Фаза 0. Фундамент
 - [x] 0.1 git, uv, скелет FastAPI, `/health`, config через pydantic-settings, первый тест, ruff
 - [x] 0.2 Docker: Dockerfile для backend, docker-compose (api + postgres + redis)
-- [ ] 0.3 GitHub-репозиторий + GitHub Actions CI (ruff + pytest)
+- [x] 0.3 GitHub-репозиторий + GitHub Actions CI (ruff + pytest)
 
 ## Фаза 1. База данных
 - [ ] 1.1 SQLAlchemy 2.0 (async) + сессия как FastAPI-зависимость
