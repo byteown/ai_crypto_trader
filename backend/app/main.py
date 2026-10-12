@@ -1,16 +1,12 @@
-from typing import Annotated
-
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from sqlalchemy.exc import InterfaceError
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.session import get_session
+from app.api.deps import SessionDep
+from app.api.v1 import bots
 
 app = FastAPI()
-
-SessionDep = Annotated[AsyncSession, Depends(get_session)]
 
 
 @app.get("/health")
@@ -23,3 +19,6 @@ async def health(session: SessionDep):
         return JSONResponse(
             content={"status": "error", "db": "unavailable"}, status_code=503
         )
+
+
+app.include_router(bots.router)
