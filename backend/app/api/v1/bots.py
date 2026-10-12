@@ -1,4 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from typing import Annotated
+
+from fastapi import APIRouter, HTTPException, Query
 
 from app.api.deps import BotRepoDep
 from app.repositories.bot import BotNameTakenError
@@ -16,7 +18,7 @@ async def create_bot(data: BotCreate, repository: BotRepoDep):
 
 
 @router.get("/", response_model=list[BotRead])
-async def read_bots(repository: BotRepoDep, limit: int = 20, offset: int = 0):
+async def read_bots(repository: BotRepoDep, limit: Annotated[int, Query(ge=5, le=50)] = 20, offset: Annotated[int, Query(ge=0, le=5)] = 0):
     return await repository.list(limit, offset)
 
 
