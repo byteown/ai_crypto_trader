@@ -18,7 +18,7 @@ jobs:
 
         services:
           postgres:
-            image: postgres:18
+            image: postgres:17
 
             ports:
               - 5432:5432
@@ -26,17 +26,17 @@ jobs:
             env:
               POSTGRES_USER: agent
               POSTGRES_PASSWORD: password
-              POSTGRES_DB: db
+              POSTGRES_DB: db_test
 
             options: >-
-              --health-cmd "pg_isready"
+              --health-cmd "pg_isready -U agent"
               --health-interval 10s
               --health-timeout 3s
               --health-retries 5
 
         env:
           TEST_DATABASE_URL: "postgresql+asyncpg://agent:password@localhost:5432/db_test"
-          DATABASE_URL: "postgresql+asyncpg://agent:password@localhost:5432/db"
+          DATABASE_URL: "postgresql+asyncpg://agent:password@localhost:5432/db_test"
 
         steps:
             - name: Checkout repository
