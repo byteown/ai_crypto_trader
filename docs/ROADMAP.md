@@ -13,7 +13,7 @@
 ## Фаза 1. База данных
 - [x] 1.1 SQLAlchemy 2.0 (async) + сессия как FastAPI-зависимость
 - [x] 1.2 Alembic, первая миграция: модель `bots`
-- [ ] 1.3 CRUD API для ботов (schemas → repository → router)
+- [x] 1.3 CRUD API для ботов (schemas → repository → router)
 - [ ] 1.4 Интеграционные тесты с отдельной тестовой БД (фикстуры pytest)
 
 ## Фаза 2. Рыночные данные и фоновые задачи
