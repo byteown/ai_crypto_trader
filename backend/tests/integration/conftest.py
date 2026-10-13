@@ -35,7 +35,7 @@ async def _drop_tables():
 
 async def _truncate():
     async with test_engine.begin() as conn:
-        await conn.execute(text("TRUNCATE bots RESTART IDENTITY CASCADE"))
+        await conn.execute(text("TRUNCATE bots, candles RESTART IDENTITY CASCADE"))
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -56,3 +56,9 @@ def client():
     app.dependency_overrides[get_session] = override_get_session
     with TestClient(app) as c:
         yield c
+
+
+@pytest.fixture
+async def session():
+    async with test_async_session_maker() as s:
+        yield s
