@@ -41,7 +41,7 @@ async def test_call_once():
     for i in range(1, 6):
         candles.append(make_candle(hour=i))
     repo = FakeCandleRepository()
-    data = FakeMarketData([candles])
+    data = FakeMarketData(candles)
 
     await sync_candles(
         source=data, repo=repo, symbol="BTC/USDT", timeframe="1h", limit=10

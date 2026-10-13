@@ -2,15 +2,14 @@ import asyncio
 from collections.abc import AsyncGenerator
 
 import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy import NullPool, text
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
-
 from app import models  # noqa: F401
 from app.core.config import settings
 from app.db.base import Base
 from app.db.session import get_session
 from app.main import app
+from fastapi.testclient import TestClient
+from sqlalchemy import NullPool, text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 test_engine = create_async_engine(settings.test_database_url, poolclass=NullPool)
 test_async_session_maker = async_sessionmaker(
