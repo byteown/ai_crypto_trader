@@ -1,7 +1,6 @@
-from sqlalchemy.exc import InterfaceError
-
 from app.db.session import get_session
 from app.main import app
+from sqlalchemy.exc import InterfaceError
 
 
 class FakeSession:
