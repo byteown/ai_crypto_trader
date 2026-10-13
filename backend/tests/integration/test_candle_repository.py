@@ -5,14 +5,16 @@ from app.repositories.candle import CandleRepository
 from app.services.market_data.base import Candle as CandleDTO
 
 
-def make_candle(hour: int, close: str = "100") -> CandleDTO:
+def make_candle(
+    hour: int, close: str = "100", high: str = "100", volume: str = "1"
+) -> CandleDTO:
     return CandleDTO(
         ts=datetime(2026, 1, 1, hour, tzinfo=UTC),
         open=Decimal(100),
-        high=Decimal(100),
+        high=Decimal(high),
         low=Decimal(100),
         close=Decimal(close),
-        volume=Decimal(1),
+        volume=Decimal(volume),
     )
 
 
@@ -45,12 +47,14 @@ async def test_insert_notclosed_candle(session):
 
     await repo.upsert_many(symbol="BTC/USDT", timeframe="1h", candles=candles)
     candles.clear()
-    candles.append(make_candle(hour=12, close="105"))
+    candles.append(make_candle(hour=12, close="105", high="200", volume="5"))
     await repo.upsert_many(symbol="BTC/USDT", timeframe="1h", candles=candles)
     result = await repo.get_latest(symbol="BTC/USDT", timeframe="1h", limit=10)
 
     assert len(result) == 1
     assert result[0].close == Decimal(105)
+    assert result[0].high == Decimal(200)
+    assert result[0].volume == Decimal(5)
 
 
 async def test_multiple_timeframe(session):
@@ -59,10 +63,11 @@ async def test_multiple_timeframe(session):
     candles.append(make_candle(hour=1))
 
     await repo.upsert_many(symbol="BTC/USDT", timeframe="1h", candles=candles)
+    await repo.upsert_many(symbol="BTC/USDT", timeframe="1d", candles=candles)
+
     result = await repo.get_latest(symbol="BTC/USDT", timeframe="1h", limit=10)
     assert len(result) == 1
 
-    await repo.upsert_many(symbol="BTC/USDT", timeframe="1d", candles=candles)
     result = await repo.get_latest(symbol="BTC/USDT", timeframe="1d", limit=10)
     assert len(result) == 1
 
