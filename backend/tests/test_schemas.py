@@ -1,7 +1,8 @@
 import pytest
+from pydantic import ValidationError
+
 from app.models.bot import BotMode, BotStrategy
 from app.schemas.bot import BotCreate, BotUpdate
-from pydantic import ValidationError
 
 VALID = {"name": "John", "symbol": "BTC/USDT", "timeframe": "1h"}
 
