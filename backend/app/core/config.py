@@ -10,6 +10,7 @@ class Settings(BaseSettings):
         "postgresql+asyncpg://agent:password@localhost:5432/db_test"
     )
     redis_url: str = Field("redis://localhost:6379/0")
+    exchange_id: str = Field("binance")
 
     model_config = SettingsConfigDict(env_file=".env", env_prefix="")
 
