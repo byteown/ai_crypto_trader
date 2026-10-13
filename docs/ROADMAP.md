@@ -18,7 +18,7 @@
 
 ## Фаза 2. Рыночные данные и фоновые задачи
 - [x] 2.1 ccxt: сервис `MarketDataSource`, модель `candles`, upsert свечей
-- [ ] 2.2 Celery + Redis: worker, задача `fetch_candles`
+- [x] 2.2 Celery + Redis: worker, задача `fetch_candles`
 - [ ] 2.3 Celery beat: периодический запуск, кэш последней цены в Redis
 - [ ] 2.4 Эндпоинт `GET /bots/{id}/candles`, тесты с `FakeMarketData`
 
