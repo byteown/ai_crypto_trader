@@ -1,8 +1,9 @@
 from typing import Annotated
 
+from fastapi import APIRouter, HTTPException, Query
+
 from app.api.deps import PriceCacheDep
 from app.schemas.price import PriceRead
-from fastapi import APIRouter, HTTPException, Query
 
 router = APIRouter(prefix="/api/v1/prices", tags=["prices"])
 

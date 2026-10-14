@@ -2,6 +2,7 @@ from decimal import Decimal
 
 import fakeredis
 import pytest
+
 from app.services.market_data.price_cache import PriceCache
 
 
