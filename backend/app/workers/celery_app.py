@@ -1,4 +1,5 @@
 from celery import Celery
+from celery.schedules import crontab
 
 from app.core.config import settings
 
@@ -15,3 +16,10 @@ celery_app.conf.update(
     accept_content=["json"],
     timezone="UTC",
 )
+
+celery_app.conf.beat_schedule = {
+    "hourly-candles": {
+        "task": "app.workers.tasks.sync_all_candles",
+        "schedule": crontab(minute=1),
+    }
+}

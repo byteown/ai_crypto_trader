@@ -46,3 +46,8 @@ class BotRepository:
     async def delete(self, bot: Bot) -> None:
         await self.session.delete(bot)
         await self.session.commit()
+
+    async def list_market_pairs(self) -> list[tuple[str, str]]:
+        stmt = select(Bot.symbol, Bot.timeframe).distinct()
+        result = await self.session.execute(stmt)
+        return [tuple(row) for row in result.all()]

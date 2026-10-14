@@ -8,3 +8,4 @@ db_data/
 redis_data/
 .env
 .idea/
+celerybeat-schedule*
