@@ -1,10 +1,9 @@
 from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Query
-
 from app.api.deps import BotRepoDep
 from app.repositories.bot import BotNameTakenError
 from app.schemas.bot import BotCreate, BotRead, BotUpdate
+from fastapi import APIRouter, HTTPException, Query
 
 router = APIRouter(prefix="/api/v1/bots", tags=["bots"])
 

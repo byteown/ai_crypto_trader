@@ -2,12 +2,6 @@ services:
   app:
     build: ./backend
 
-    environment:
-      APP_NAME: ${APP_NAME}
-      DEBUG: ${DEBUG}
-      DATABASE_URL: ${DATABASE_URL}
-      REDIS_URL: ${REDIS_URL}
-
     env_file:
       - .env
 

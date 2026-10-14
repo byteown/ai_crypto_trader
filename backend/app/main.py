@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import InterfaceError
 
 from app.api.deps import SessionDep
-from app.api.v1 import bots
+from app.api.v1 import bots, prices
 
 app = FastAPI()
 
@@ -22,3 +22,4 @@ async def health(session: SessionDep):
 
 
 app.include_router(bots.router)
+app.include_router(prices.router)

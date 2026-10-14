@@ -36,6 +36,14 @@ class FakeCandleRepository:
         self.saved.append((symbol, timeframe, candles))
 
 
+class FakePriceCache:
+    def __init__(self):
+        self.prices = {}
+
+    async def set_last_price(self, symbol, price):
+        self.prices[symbol] = price
+
+
 async def test_call_once():
     candles: list[CandleDTO] = []
     for i in range(1, 6):
@@ -88,3 +96,27 @@ async def test_empty_list():
             source=data, repo=repo, symbol="BTC/USDT", timeframe="1h", limit=10
         )
     ) == 0
+
+
+async def test_cache():
+    candles: list[CandleDTO] = [
+        make_candle(hour=1, close="100"),
+        make_candle(hour=1, close="101"),
+        make_candle(hour=1, close="102"),
+    ]
+    cache = FakePriceCache()
+
+    for candle in candles:
+        await cache.set_last_price(symbol="BTC/USDT", price=Decimal(candle.close))
+
+    assert cache.prices["BTC/USDT"] == Decimal(102)
+
+
+async def test_empty_cache():
+    candles: list[CandleDTO] = []
+    cache = FakePriceCache()
+
+    for candle in candles:
+        await cache.set_last_price(symbol="BTC/USDT", price=Decimal(candle.close))
+
+    assert cache.prices == {}
