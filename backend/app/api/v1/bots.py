@@ -2,9 +2,10 @@ from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Query
 
-from app.api.deps import BotRepoDep
+from app.api.deps import BotDep, BotRepoDep, CandleRepoDep, EnqueueFetchDep
 from app.repositories.bot import BotNameTakenError
 from app.schemas.bot import BotCreate, BotRead, BotUpdate
+from app.schemas.candle import CandleRead, RefreshAccepted
 
 router = APIRouter(prefix="/api/v1/bots", tags=["bots"])
 
@@ -27,19 +28,12 @@ async def read_bots(
 
 
 @router.get("/{bot_id}", response_model=BotRead)
-async def read_bot(bot_id: int, repository: BotRepoDep):
-    bot = await repository.get(bot_id)
-    if bot is None:
-        raise HTTPException(status_code=404, detail="Bot not found") from None
+async def read_bot(bot: BotDep):
     return bot
 
 
 @router.patch("/{bot_id}", response_model=BotRead)
-async def patch_bot(bot_id: int, data: BotUpdate, repository: BotRepoDep):
-    bot = await repository.get(bot_id)
-    if bot is None:
-        raise HTTPException(status_code=404, detail="Bot not found") from None
-
+async def patch_bot(bot: BotDep, data: BotUpdate, repository: BotRepoDep):
     try:
         return await repository.update(bot, data)
     except BotNameTakenError:
@@ -47,9 +41,24 @@ async def patch_bot(bot_id: int, data: BotUpdate, repository: BotRepoDep):
 
 
 @router.delete("/{bot_id}", status_code=204)
-async def delete_bot(bot_id: int, repository: BotRepoDep):
-    bot = await repository.get(bot_id)
-    if bot is None:
-        raise HTTPException(status_code=404, detail="Bot not found") from None
-
+async def delete_bot(bot: BotDep, repository: BotRepoDep):
     return await repository.delete(bot)
+
+
+@router.get("/{bot_id}/candles", response_model=list[CandleRead])
+async def read_bot_candles(
+    bot: BotDep,
+    candles: CandleRepoDep,
+    limit: Annotated[int, Query(gt=0, le=1000)] = 100,
+):
+    return await candles.get_latest(
+        symbol=bot.symbol, timeframe=bot.timeframe, limit=limit
+    )
+
+
+@router.post(
+    "/{bot_id}/candles/refresh", response_model=RefreshAccepted, status_code=202
+)
+async def refresh_bot_candles(bot: BotDep, enqueue: EnqueueFetchDep):
+    result = enqueue(bot.symbol, bot.timeframe)
+    return RefreshAccepted(task_id=result.id)
